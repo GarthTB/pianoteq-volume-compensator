@@ -14,8 +14,10 @@ The application takes the input wav file, splits it into 88 slices,
 calculates the rms amplitude of each slice, and generates
 volume compensation values with moving average smoothing.
 The volume compensation values are then saved to a text file
-and a binary file. The binary file can be copied and directly
-replace a specific section of the Pianoteq preset file.
+and a binary file. *The binary file can be copied and directly
+replace a specific section of the Pianoteq preset file.*
+
+*Not implemented yet*
 
 ## Usage
 
@@ -52,6 +54,6 @@ This project is licensed under the Apache 2.0 license.
 
 ## Changelog
 
-### v0.1.0
+### v0.1.0 - 20250509
 
 - Initial release.
