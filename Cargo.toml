@@ -2,5 +2,16 @@
 name = "pianoteq_volume_compensator"
 version = "0.1.0"
 edition = "2024"
+authors = ["GarthTB <g-art-h@outlook.com>"]
+description = "A Rust tool for compensating the volume of a Pianoteq preset."
+repository = "https://github.com/GarthTB/pianoteq-volume-compensator"
+keywords = ["pianoteq", "volume", "compensation"]
+categories = ["command-line-utilities"]
+license = "Apache-2.0"
+readme = "README.md"
 
 [dependencies]
+hound = "3.5.1"
+rayon = "1.10.0"
+serde = "1.0.219"
+toml = "0.8.22"
