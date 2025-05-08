@@ -1,0 +1,6 @@
+input_file = "input.wav"  # input file name (must be in the same directory as the executable)
+output_bin = "gain.bin"   # output binary file name (in the same directory as the executable, overwrite if exists)
+output_txt = "gain.txt"   # output text file name (in the same directory as the executable, overwrite if exists)
+start_time = 0.0          # start time of the targeted section in seconds
+end_time = 176.0          # end time of the targeted section in seconds
+smooth_span = 5           # number of adjacent notes considered on each side for averaging
