@@ -1,10 +1,9 @@
 use hound::WavReader;
-use serde::Deserialize;
 use std::env::current_exe;
 use std::fs::{File, read_to_string};
 use std::io::BufReader;
 
-#[derive(Deserialize)]
+#[derive(serde::Deserialize)]
 pub(crate) struct Config {
     /// input file name (must be in the same directory as the executable)
     input_file: String,
@@ -28,15 +27,29 @@ impl Config {
         toml::from_str(&config_str).map_err(|_| "Failed to parse config file")
     }
 
-    pub(crate) fn read_input_file(&self) -> Result<WavReader<BufReader<File>>, &'static str> {
-        WavReader::open(&self.input_file).map_err(|_| "Failed to open input file")
+    pub(crate) fn get_input_reader(&self) -> Result<WavReader<BufReader<File>>, &'static str> {
+        let exe_path = current_exe().map_err(|_| "Failed to get executable path")?;
+        let input_file = exe_path.with_file_name(&self.input_file);
+        WavReader::open(input_file).map_err(|_| "Failed to open input file")
     }
 
-    pub(crate) fn get_output_bin_path(&self) -> Result<File, &'static str> {
-        File::create(&self.output_bin).map_err(|_| "Failed to create output binary file")
+    pub(crate) fn get_output_bin_file(&self) -> Result<File, &'static str> {
+        let exe_path = current_exe().map_err(|_| "Failed to get executable path")?;
+        let output_bin = exe_path.with_file_name(&self.output_bin);
+        if output_bin.exists() {
+            std::fs::remove_file(&output_bin)
+                .map_err(|_| "Failed to remove existing output binary file")?;
+        }
+        File::create(output_bin).map_err(|_| "Failed to create output binary file")
     }
 
-    pub(crate) fn get_output_txt_path(&self) -> Result<File, &'static str> {
-        File::create(&self.output_txt).map_err(|_| "Failed to create output text file")
+    pub(crate) fn get_output_txt_file(&self) -> Result<File, &'static str> {
+        let exe_path = current_exe().map_err(|_| "Failed to get executable path")?;
+        let output_txt = exe_path.with_file_name(&self.output_txt);
+        if output_txt.exists() {
+            std::fs::remove_file(&output_txt)
+                .map_err(|_| "Failed to remove existing output text file")?;
+        }
+        File::create(output_txt).map_err(|_| "Failed to create output binary file")
     }
 }
