@@ -6,11 +6,9 @@ pub(crate) fn split_channels(samples: Vec<f32>, channels: u16) -> Vec<Vec<f32>> 
     let channels = channels as usize;
     let len = samples.len() / channels;
     let mut result = vec![Vec::with_capacity(len); channels];
-    result.par_iter_mut().enumerate().for_each(|(ch, vec)| {
-        for i in 0..len {
-            vec.push(samples[channels * i + ch]);
-        }
-    });
+    for ch in 0..channels {
+        result[ch].extend(samples[ch..].iter().step_by(channels).copied());
+    }
     result
 }
 
